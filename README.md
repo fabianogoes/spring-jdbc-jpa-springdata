@@ -32,7 +32,8 @@ Projeto Template de Configurações com Spring MVC
 ```   
 
 **Create persistence.xml**   
-> /src/main/resources/META-INF/persistence.xml      
+> /src/main/resources/META-INF/persistence.xml   
+
 ```xml   
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1"
@@ -52,7 +53,8 @@ Projeto Template de Configurações com Spring MVC
 ```   
 
 **Configuration EntityManager to Spring**    
-> /src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml    
+> /src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml   
+
 ```xml    
 
     <beans:bean id="dsProducao" class="org.springframework.jdbc.datasource.DriverManagerDataSource">        
