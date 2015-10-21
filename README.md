@@ -52,25 +52,27 @@ Projeto Template de Configurações com Spring MVC
 ```   
 
 **Configuration EntityManager to Spring**    
-> /src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml 
-```xml   
+> /src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml    
+```xml    
+
     <beans:bean id="dsProducao" class="org.springframework.jdbc.datasource.DriverManagerDataSource">        
         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <beans:property name="url" value="jdbc:mysql://localhost:3306/database_name?autoReconnect=true" />
         <beans:property name="username" value="root" /> 
         <beans:property name="password" value="root" /> 
     </beans:bean>
-
+    
     <beans:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <beans:property name="dataSource" ref="dsProducao" />
         <beans:property name="jpaVendorAdapter">
         <beans:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </beans:property>
     </beans:bean>
-
+    
     <tx:annotation-driven/>
-
+    
     <beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <beans:property name="entityManagerFactory" ref="entityManagerFactory" />
     </beans:bean>     
+    
 ```   
