@@ -78,3 +78,91 @@ Projeto Template de Configurações com Spring MVC
     </beans:bean>     
     
 ```   
+
+## Test DAO com Injeção de Dependencia
+
+**Dependencia para testes**
+```xml
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>3.2.3.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+```   
+
+**Alterar a dependencia Servlet para**
+```xml
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+```   
+
+> src/test/resources/META-INF/persistence-test.xml   
+
+> src/test/resources/spring-context-test.xml   
+
+
+```java
+@Repository
+public class PessoaDAO {
+
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Transactional
+	public Pessoa save(Pessoa pessoa){
+		if( pessoa.getId() != null && pessoa.getId() > 0 ){
+			return em.merge(pessoa);
+		}
+		
+		em.persist(pessoa);
+		return pessoa;
+	}
+	
+}
+```   
+
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = { "classpath*:spring-context-test.xml", "classpath*:persistence-test.xml"})
+@Transactional
+public class PessoaDAOTest {
+
+	@Autowired
+	private PessoaDAO dao;
+	
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void testsavePessoa() {
+		
+		Pessoa pessoa = new Pessoa(null, "teste");
+		pessoa = dao.save(pessoa);
+		
+		Assert.assertNotNull( pessoa.getId() );
+	}
+
+}
+```   
