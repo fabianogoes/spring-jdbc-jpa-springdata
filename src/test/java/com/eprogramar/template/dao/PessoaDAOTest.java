@@ -1,5 +1,7 @@
 package com.eprogramar.template.dao;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,6 +26,7 @@ public class PessoaDAOTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 
 	@After
@@ -31,12 +34,55 @@ public class PessoaDAOTest {
 	}
 
 	@Test
-	public void testsavePessoa() {
-		
-		Pessoa pessoa = new Pessoa(null, "teste");
+	public void testCRUDInsertPessoa() {
+		Pessoa pessoa = new Pessoa(null, "testCRUDInsertPessoa");
 		pessoa = dao.save(pessoa);
+		Assert.assertNotNull( "deve ter id not null apos o save", pessoa.getId() );
+	}
+	
+	@Test
+	public void testCRUDUpdatePessoa() {
+		Pessoa pessoaInsert = new Pessoa(null, "testCRUDUpdatePessoa");
+		pessoaInsert = dao.save(pessoaInsert);
+		Assert.assertNotNull( "deve ter id not null apos o save", pessoaInsert.getId() );
 		
-		Assert.assertNotNull( pessoa.getId() );
+		pessoaInsert.setNome("Update");
+		dao.save(pessoaInsert);
+		
+		Pessoa pessoaPosUpdate = dao.findById( pessoaInsert.getId() );
+		Assert.assertEquals("pessoa no find após o Update deve estar com o nome atualizado", pessoaInsert.getNome(), pessoaPosUpdate.getNome());
 	}
 
+	@Test
+	public void testCRUDFindByIdPessoa(){
+		Pessoa pessoaInsert = new Pessoa(null, "testCRUDFindByIdPessoa");
+		pessoaInsert = dao.save(pessoaInsert);
+		Assert.assertNotNull( pessoaInsert.getId() );
+		
+		Pessoa pessoaFindById = dao.findById( pessoaInsert.getId() );
+		Assert.assertEquals("o id do find deve ser o mesmo do insert", pessoaInsert.getId(), pessoaFindById.getId());
+	}
+	
+	@Test
+	public void testCRUDFindAllPessoa(){
+		Pessoa pessoaInsert = new Pessoa(null, "testCRUDFindAllPessoa");
+		pessoaInsert = dao.save(pessoaInsert);
+		Assert.assertNotNull( pessoaInsert.getId() );
+		
+		List<Pessoa> list = dao.findAll();
+		Assert.assertNotNull("a lista deve ser diferente de nula", list);
+		
+		Assert.assertTrue("deve ter pelo menos 1 item na lista, por foi inserido durante o test", list.size() > 0);
+	}
+	
+	@Test
+	public void testCRUDRemovePessoa(){
+		Pessoa pessoaInsert = new Pessoa(null, "testCRUDRemovePessoa");
+		pessoaInsert = dao.save(pessoaInsert);
+		Assert.assertNotNull( pessoaInsert.getId() );
+		
+		dao.remove(pessoaInsert.getId());
+		Pessoa findById = dao.findById(pessoaInsert.getId());
+		Assert.assertNull("pessoa deve ser nula/Não localizada após o remove", findById);
+	}
 }
