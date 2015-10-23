@@ -5,28 +5,48 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Cadastro de Pessoa</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<style type="text/css">
+			html{
+				margin-top: 50px;
+			}
+		</style>		
 	</head>
-<body>
+<body class="container">
 
-	<h1>Cadastro de Pessoa</h1>
-	<hr/>
+	<div class="jumbotron">
+		<h1>Cadastro de Pessoa</h1>
+	</div>
 	
 	<c:if test="${ list != null }">
 	
-		<table>
+		<table class="table table-bordered table-condensed table-striped table-hover">
 			<thead>
 				<tr>
-					<th>ID</th><th>Nome</th><th>...</th>
+					<th class="text-center col-md-1">ID</th>
+					<th>Nome</th>
+					<th class="text-center col-md-1">
+						<a href="${ pageContext.request.contextPath }/pessoa/" class="btn btn-primary " >
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						</a>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="p" items="${ list }" >
 					<tr>
-						<td>${ p.id }</td>
-						<td>${ p.nome }</td>
+						<th class="text-center col-md-1">${ p.id }</td>
 						<td>
-							<a href="${ pageContext.request.contextPath }/pessoa/${ p.id }">Edit</a>
-							<a href="${ pageContext.request.contextPath }/pessoa/remove/${ p.id }">Delete</a>
+							<a href="${ pageContext.request.contextPath }/pessoa/${ p.id }" >${ p.nome }</a>
+						</td>
+						<td class="text-center col-md-1">
+							<a href="${ pageContext.request.contextPath }/pessoa/${ p.id }" class="btn btn-warning btn-sm" >
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+							</a>
+							<a href="javascript:showConfirmDelete(${p.id});" class="btn btn-danger btn-sm">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -34,20 +54,98 @@
 		</table>
 	
 	</c:if>
+		
+	<!-- Modal -->
+	<div class="modal fade bs-example-modal-sm" id="modalConfirmaDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h1 class="modal-title text-center" id="myModalLabel">Exclusão</h1>
+	      </div>
+	      
+	      <div class="modal-body text-center">
+		      <h3>Confirma a exclusão do registro?</h3>
+	      </div>
+	      
+	      <div class="modal-footer">
+	      	<div class="row">
+	      		
+	      		<div class="col-md-1">
+					<a href="#" class="btn btn-danger" id="idDeletePessoa" >
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Confirma Exclusão
+					</a>
+	      		</div>
+	      		<div class="col-md-10"></div>
+	      		<div class="col-md-1">
+					<a href="${ pageContext.request.contextPath }/pessoa/remove/${ p.id }" class="btn btn-default pull-right" >
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+					</a>
+				</div>
+	      	</div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</div>	
 	
 	<c:if test="${ list == null }">
 		<form action="${ pageContext.request.contextPath }/pessoa" method="post">
-			<label>ID</label><br/>
-			<input type="text" name="id" value="${ pessoa.id }" readonly="readonly" /><br/>
+			<div class="row">
+				<div class="col-md-2">
+					<label>ID</label>
+					<input type="text" class="form-control" name="id" value="${ pessoa.id }" readonly="readonly" />
+				</div>
+			</div>
 
-			<label>Nome</label><br/>
-			<input type="text" name="nome" value="${ pessoa.nome }" /><br/>
+			<div class="row">
+				<div class="col-md-12">
+					<label>Nome</label><br/>
+					<input type="text" class="form-control" name="nome" value="${ pessoa.nome }" /><br/>
+				</div>
+			</div>
 
-			<button type="submit">Salvar</button>
-			<a href="${ pageContext.request.contextPath }/pessoa/list">Cancelar</a>
+			<hr/>
+
+			<div class="row">
+				<div class="col-md-12">
+					<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar
+					</button>
+					<a href="${ pageContext.request.contextPath }/pessoa/list" class="btn btn-default pull-right" >
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+					</a>
+				</div>
+			</div>
 			
 		</form>
 	</c:if>
+	
+	<c:if test="${ message != null }">
+		<div class="alert alert-success alert-dismissible text-center" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <strong>Informação!</strong><br/> 
+		  ${ message }
+		</div>		
+	</c:if>
+	
+	<hr/>
+	
+	<div class="text-center">
+		<a href="${ pageContext.request.contextPath }/" >
+			Home
+		</a>
+	</div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function showConfirmDelete(id) { 
+			$('#idDeletePessoa').attr('href', '${ pageContext.request.contextPath }/pessoa/remove/'+id);
+			$('#modalConfirmaDelete').modal('show');
+		}	
+	</script>
 
 </body>
 </html>

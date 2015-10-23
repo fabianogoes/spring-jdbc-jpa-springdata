@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.eprogramar.template.dao.PessoaDAO;
 import com.eprogramar.template.model.Pessoa;
@@ -35,15 +36,17 @@ public class PessoaController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String save(Pessoa pessoa){
+	public String save(Pessoa pessoa, RedirectAttributes redirectAttributes){
 		dao.save(pessoa);
-		return "redirect:/pessoa";
+		redirectAttributes.addFlashAttribute("message", "Registro salvo com sucesso!!!");
+		return "redirect:/pessoa/list";
 	}
 	
 	@RequestMapping("/remove/{id}")
-	public String remove(@PathVariable("id") Long id){
+	public String remove(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
 		dao.remove(id);
-		return "redirect:/pessoa";
+		redirectAttributes.addFlashAttribute("message", "Registro excluido com sucesso!!!");
+		return "redirect:/pessoa/list";
 	}	
 	
 }
