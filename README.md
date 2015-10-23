@@ -204,12 +204,12 @@ public class ClienteDAO extends GenericAbastractDAO<Cliente> {
 
 **Dependencia**   
 ```xml   
-		<!-- Spring Data -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>1.8.2.RELEASE</version>
-		</dependency>
+	<!-- Spring Data -->
+	<dependency>
+		<groupId>org.springframework.data</groupId>
+		<artifactId>spring-data-jpa</artifactId>
+		<version>1.8.2.RELEASE</version>
+	</dependency>
 ```   
 
 **Configuração Spring**   
