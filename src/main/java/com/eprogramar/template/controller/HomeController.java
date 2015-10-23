@@ -6,13 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.eprogramar.template.repositories.PessoaDAO;
+import com.eprogramar.template.repositories.PessoaRepository;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	private PessoaDAO dao;
+	private PessoaRepository dao;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {

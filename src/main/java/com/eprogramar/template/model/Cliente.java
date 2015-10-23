@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Cliente extends GenericAbstractModel {
+public class Cliente {
 
 	@Id
 	@GeneratedValue

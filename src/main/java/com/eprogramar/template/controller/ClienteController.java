@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.eprogramar.template.model.Cliente;
-import com.eprogramar.template.repositories.ClienteDAO;
+import com.eprogramar.template.repositories.ClienteRepository;
 
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
 
 	@Autowired
-	private ClienteDAO dao;
+	private ClienteRepository dao;
 	
 	@RequestMapping("/list")
 	public String list(Model model){
-		model.addAttribute("list", dao.findAll(Cliente.class));
+		model.addAttribute("list", dao.findAll());
 		return "cliente";
 	}
 	
@@ -31,7 +31,7 @@ public class ClienteController {
 
 	@RequestMapping("/{id}")
 	public String edit(@PathVariable("id") Long id, Model model){
-		model.addAttribute("cliente", dao.findById(id, Cliente.class));
+		model.addAttribute("cliente", dao.findOne(id));
 		return "cliente";
 	}
 	
@@ -44,7 +44,7 @@ public class ClienteController {
 	
 	@RequestMapping("/remove/{id}")
 	public String remove(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
-		dao.remove(id, Cliente.class);
+		dao.delete(id);
 		redirectAttributes.addFlashAttribute("message", "Registro excluido com sucesso!!!");
 		return "redirect:/cliente/list";
 	}	

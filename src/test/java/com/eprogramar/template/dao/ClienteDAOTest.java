@@ -14,7 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eprogramar.template.model.Cliente;
-import com.eprogramar.template.repositories.ClienteDAO;
+import com.eprogramar.template.repositories.ClienteRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -23,7 +23,7 @@ import com.eprogramar.template.repositories.ClienteDAO;
 public class ClienteDAOTest {
 
 	@Autowired
-	private ClienteDAO dao;
+	private ClienteRepository dao;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -50,7 +50,7 @@ public class ClienteDAOTest {
 		clienteInsert.setNome("Update");
 		dao.save(clienteInsert);
 		
-		Cliente clientePosUpdate = dao.findById( clienteInsert.getId(), Cliente.class );
+		Cliente clientePosUpdate = dao.findOne( clienteInsert.getId() );
 		Assert.assertEquals("cliente no find após o Update deve estar com o nome atualizado", clienteInsert.getNome(), clientePosUpdate.getNome());
 	}
 
@@ -60,7 +60,7 @@ public class ClienteDAOTest {
 		clienteInsert = dao.save(clienteInsert);
 		Assert.assertNotNull( clienteInsert.getId() );
 		
-		Cliente clienteFindById = dao.findById( clienteInsert.getId(), Cliente.class );
+		Cliente clienteFindById = dao.findOne( clienteInsert.getId() );
 		Assert.assertEquals("o id do find deve ser o mesmo do insert", clienteInsert.getId(), clienteFindById.getId());
 	}
 	
@@ -70,7 +70,7 @@ public class ClienteDAOTest {
 		clienteInsert = dao.save(clienteInsert);
 		Assert.assertNotNull( clienteInsert.getId() );
 		
-		List<Cliente> list = dao.findAll(Cliente.class);
+		List<Cliente> list = (List<Cliente>) dao.findAll();
 		Assert.assertNotNull("a lista deve ser diferente de nula", list);
 		
 		Assert.assertTrue("deve ter pelo menos 1 item na lista, por foi inserido durante o test", list.size() > 0);
@@ -82,8 +82,8 @@ public class ClienteDAOTest {
 		clienteInsert = dao.save(clienteInsert);
 		Assert.assertNotNull( clienteInsert.getId() );
 		
-		dao.remove(clienteInsert.getId(), Cliente.class);
-		Cliente findById = dao.findById(clienteInsert.getId(), Cliente.class);
+		dao.delete(clienteInsert.getId());
+		Cliente findById = dao.findOne( clienteInsert.getId() );
 		Assert.assertNull("cliente deve ser nula/Não localizada após o remove", findById);
 	}
 }

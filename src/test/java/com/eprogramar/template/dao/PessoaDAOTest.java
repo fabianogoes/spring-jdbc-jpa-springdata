@@ -14,7 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eprogramar.template.model.Pessoa;
-import com.eprogramar.template.repositories.PessoaDAO;
+import com.eprogramar.template.repositories.PessoaRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -23,7 +23,7 @@ import com.eprogramar.template.repositories.PessoaDAO;
 public class PessoaDAOTest {
 
 	@Autowired
-	private PessoaDAO dao;
+	private PessoaRepository dao;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -50,7 +50,7 @@ public class PessoaDAOTest {
 		pessoaInsert.setNome("Update");
 		dao.save(pessoaInsert);
 		
-		Pessoa pessoaPosUpdate = dao.findById( pessoaInsert.getId(), Pessoa.class );
+		Pessoa pessoaPosUpdate = dao.findOne( pessoaInsert.getId() );
 		Assert.assertEquals("pessoa no find após o Update deve estar com o nome atualizado", pessoaInsert.getNome(), pessoaPosUpdate.getNome());
 	}
 
@@ -60,7 +60,7 @@ public class PessoaDAOTest {
 		pessoaInsert = dao.save(pessoaInsert);
 		Assert.assertNotNull( pessoaInsert.getId() );
 		
-		Pessoa pessoaFindById = dao.findById( pessoaInsert.getId(), Pessoa.class );
+		Pessoa pessoaFindById = dao.findOne( pessoaInsert.getId() );
 		Assert.assertEquals("o id do find deve ser o mesmo do insert", pessoaInsert.getId(), pessoaFindById.getId());
 	}
 	
@@ -70,7 +70,7 @@ public class PessoaDAOTest {
 		pessoaInsert = dao.save(pessoaInsert);
 		Assert.assertNotNull( pessoaInsert.getId() );
 		
-		List<Pessoa> list = dao.findAll(Pessoa.class);
+		List<Pessoa> list = (List<Pessoa>) dao.findAll();
 		Assert.assertNotNull("a lista deve ser diferente de nula", list);
 		
 		Assert.assertTrue("deve ter pelo menos 1 item na lista, por foi inserido durante o test", list.size() > 0);
@@ -82,8 +82,8 @@ public class PessoaDAOTest {
 		pessoaInsert = dao.save(pessoaInsert);
 		Assert.assertNotNull( pessoaInsert.getId() );
 		
-		dao.remove(pessoaInsert.getId(), Pessoa.class);
-		Pessoa findById = dao.findById(pessoaInsert.getId(), Pessoa.class);
+		dao.delete(pessoaInsert.getId());
+		Pessoa findById = dao.findOne( pessoaInsert.getId() );
 		Assert.assertNull("pessoa deve ser nula/Não localizada após o remove", findById);
 	}
 }

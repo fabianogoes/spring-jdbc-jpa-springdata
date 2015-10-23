@@ -221,6 +221,23 @@ public class ClienteDAO extends GenericAbastractDAO<Cliente> {
                       transaction-manager-ref="transactionManager"/>
 ```   
 
+**Criar Interface Repository herdando de CrudRepository**   
+```java
+@Repository
+public interface ClienteRepository extends CrudRepository<Cliente, Long> {
+}
+```    
+
+**Exemplo de Métodos da Interface Repository**   
+```java   
+cliente = dao.save(cliente);
+clienteFind = dao.findOne( 1L );
+List<Cliente> list = (List<Cliente>) dao.findAll();
+dao.delete(clienteInsert.getId());
+```   
+
+  
+
                       		
 
 
