@@ -34,7 +34,8 @@ Projeto Template de Configurações com Spring MVC
 **Create persistence.xml**   
 > /src/main/resources/META-INF/persistence.xml   
 
-```xml   
+```xml 
+     
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1"
     xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -50,6 +51,7 @@ Projeto Template de Configurações com Spring MVC
         </properties>
     </persistence-unit>
 </persistence>
+
 ```   
 
 **Configuration EntityManager to Spring**    
