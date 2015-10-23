@@ -1,5 +1,7 @@
 package com.eprogramar.template.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -24,4 +26,17 @@ public class PessoaDAO {
 		return pessoa;
 	}
 	
+	public Pessoa findById(Long id){
+		return em.find(Pessoa.class, id);
+	}
+	
+	@Transactional
+	public void remove(Long id){
+		Pessoa pessoa = this.findById(id);
+		em.remove(pessoa);
+	}
+	
+	public List<Pessoa> findAll(){
+		return em.createQuery("from Pessoa", Pessoa.class).getResultList();
+	}
 }
