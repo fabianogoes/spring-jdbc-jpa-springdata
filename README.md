@@ -170,3 +170,33 @@ public class PessoaDAOTest {
 
 }
 ```   
+
+*******************************
+
+## CRUD Generic Abstract DAO   
+
+1. Criar uma Classe model herdando de **GenericAbstractModel**   
+2. Criar uma classe DAO herdando de **GenericAbastractDAO**   
+
+```java
+
+@Entity
+public class Cliente extends GenericAbstractModel {
+
+	@Id
+	@GeneratedValue
+	private Long id;
+	private String nome;
+	private String cpf;
+	
+	...
+}
+
+@Repository
+public class ClienteDAO extends GenericAbastractDAO<Cliente> {
+}
+
+```   
+
+
+
