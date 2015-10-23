@@ -23,6 +23,9 @@
 		<li>
 			<a href="${ pageContext.request.contextPath }/pessoa/list">Cadastro de Pessoa</a>
 		</li>
+		<li>
+			<a href="${ pageContext.request.contextPath }/cliente/list">Cadastro de Cliente</a>
+		</li>
 	</ul>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
