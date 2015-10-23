@@ -4,8 +4,10 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -24,7 +26,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.eprogramar.template.controller" />
-	<context:component-scan base-package="com.eprogramar.template.dao" />
+	<context:component-scan base-package="com.eprogramar.template.repositories" />
 	
     <beans:bean id="dsProducao" class="org.springframework.jdbc.datasource.DriverManagerDataSource">        
         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -45,5 +47,11 @@
     <beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <beans:property name="entityManagerFactory" ref="entityManagerFactory" />
     </beans:bean>	
+    
+    <!-- ********** Configuration Spring Data ************************************************** -->
+    <beans:bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    <jpa:repositories base-package="com.eprogramar.template.repositories"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager"/>    
 	
 </beans:beans>

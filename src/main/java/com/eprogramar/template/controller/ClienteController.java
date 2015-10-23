@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.eprogramar.template.dao.ClienteDAO;
 import com.eprogramar.template.model.Cliente;
+import com.eprogramar.template.repositories.ClienteDAO;
 
 @Controller
 @RequestMapping("/cliente")

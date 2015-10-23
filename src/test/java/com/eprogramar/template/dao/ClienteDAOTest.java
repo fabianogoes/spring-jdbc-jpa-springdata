@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eprogramar.template.model.Cliente;
+import com.eprogramar.template.repositories.ClienteDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

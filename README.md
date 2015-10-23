@@ -196,7 +196,32 @@ public class Cliente extends GenericAbstractModel {
 public class ClienteDAO extends GenericAbastractDAO<Cliente> {
 }
 
+```  
+
+*******************************
+
+## CRUD Spring Data   
+
+**Dependencia**   
+```xml   
+		<!-- Spring Data -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.8.2.RELEASE</version>
+		</dependency>
 ```   
+
+**Configuração Spring**   
+```xml   
+    <!-- ********** Configuration Spring Data ************************************************** -->
+    <beans:bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    <jpa:repositories base-package="br.com.code.finance.repositories"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager"/>
+```   
+
+                      		
 
 
 
