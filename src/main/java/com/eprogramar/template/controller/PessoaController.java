@@ -20,7 +20,7 @@ public class PessoaController {
 	
 	@RequestMapping("/list")
 	public String list(Model model){
-		model.addAttribute("list", dao.findAll());
+		model.addAttribute("list", dao.findAll(Pessoa.class));
 		return "pessoa";
 	}
 	
@@ -31,7 +31,7 @@ public class PessoaController {
 
 	@RequestMapping("/{id}")
 	public String edit(@PathVariable("id") Long id, Model model){
-		model.addAttribute("pessoa", dao.findById(id));
+		model.addAttribute("pessoa", dao.findById(id, Pessoa.class));
 		return "pessoa";
 	}
 	
@@ -44,7 +44,7 @@ public class PessoaController {
 	
 	@RequestMapping("/remove/{id}")
 	public String remove(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
-		dao.remove(id);
+		dao.remove(id, Pessoa.class);
 		redirectAttributes.addFlashAttribute("message", "Registro excluido com sucesso!!!");
 		return "redirect:/pessoa/list";
 	}	

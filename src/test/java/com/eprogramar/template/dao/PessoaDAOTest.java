@@ -49,7 +49,7 @@ public class PessoaDAOTest {
 		pessoaInsert.setNome("Update");
 		dao.save(pessoaInsert);
 		
-		Pessoa pessoaPosUpdate = dao.findById( pessoaInsert.getId() );
+		Pessoa pessoaPosUpdate = dao.findById( pessoaInsert.getId(), Pessoa.class );
 		Assert.assertEquals("pessoa no find após o Update deve estar com o nome atualizado", pessoaInsert.getNome(), pessoaPosUpdate.getNome());
 	}
 
@@ -59,7 +59,7 @@ public class PessoaDAOTest {
 		pessoaInsert = dao.save(pessoaInsert);
 		Assert.assertNotNull( pessoaInsert.getId() );
 		
-		Pessoa pessoaFindById = dao.findById( pessoaInsert.getId() );
+		Pessoa pessoaFindById = dao.findById( pessoaInsert.getId(), Pessoa.class );
 		Assert.assertEquals("o id do find deve ser o mesmo do insert", pessoaInsert.getId(), pessoaFindById.getId());
 	}
 	
@@ -69,7 +69,7 @@ public class PessoaDAOTest {
 		pessoaInsert = dao.save(pessoaInsert);
 		Assert.assertNotNull( pessoaInsert.getId() );
 		
-		List<Pessoa> list = dao.findAll();
+		List<Pessoa> list = dao.findAll(Pessoa.class);
 		Assert.assertNotNull("a lista deve ser diferente de nula", list);
 		
 		Assert.assertTrue("deve ter pelo menos 1 item na lista, por foi inserido durante o test", list.size() > 0);
@@ -81,8 +81,8 @@ public class PessoaDAOTest {
 		pessoaInsert = dao.save(pessoaInsert);
 		Assert.assertNotNull( pessoaInsert.getId() );
 		
-		dao.remove(pessoaInsert.getId());
-		Pessoa findById = dao.findById(pessoaInsert.getId());
+		dao.remove(pessoaInsert.getId(), Pessoa.class);
+		Pessoa findById = dao.findById(pessoaInsert.getId(), Pessoa.class);
 		Assert.assertNull("pessoa deve ser nula/Não localizada após o remove", findById);
 	}
 }
